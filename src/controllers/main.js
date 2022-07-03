@@ -132,7 +132,6 @@ const mainController = {
     console.log(id);
     let {title, cover, description}=req.body
     
-    
     let modificar= await db.Book.update({
       title:title,
       cover:cover,
@@ -142,6 +141,7 @@ const mainController = {
     }
 
     )
+  
     
    let books= await db.Book.findAll({
     include: [{ association: 'authors' }]
