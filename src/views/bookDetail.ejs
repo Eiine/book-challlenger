@@ -20,7 +20,7 @@
           <p class="lead mb-4 fw-bold">Release Date: </p>
           <p class="lead mb-4"><%= data[0].dataValues.description %></p>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="location.href='/books/edit/:<%=data[0].dataValues.id %>'">Edit</button>
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="location.href='/books/edit/<%=data[0].dataValues.id %>'">Edit</button>
             <button type="button" class="btn btn-outline-secondary btn-lg px-4">Delete</button> 
           </div>
         </div>

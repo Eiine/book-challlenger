@@ -14,10 +14,10 @@ const mainController = {
   },
   bookDetail: async (req, res) => {
     let id=req.params.id
-    
+    console.log(id);
     //esto esta mal
     let datos=await db.Book.findAll({ where: id={id},include: [{ association: 'authors' }] })
-      console.log(datos[0].dataValues.authors[0].dataValues.name);
+      ;
       
       
       res.render("bookDetail",{data:datos})
@@ -51,15 +51,15 @@ const mainController = {
       })
       .catch((error) => console.log(error));
   },
-  authorBooks: (req, res) => {
-    // Implement books by author
+  authorBooks: async (req, res) => {
+    
     let id= req.params.id
-    db.Book.findByPk(req.params.id).then(data=>{
-      console.log(data);
+    let data= await db.Book.findAll({where: { id:id }})
+           
       res.render("authorBooks",{data})
     
 
-    });
+    ;
   },
   register: (req, res) => {
     res.render('register');
@@ -109,9 +109,8 @@ const mainController = {
 
   },
   edit: async (req, res) => {
-    let Cid=req.params.id
-    let Did= Cid.split(":")
-    let id=Did[1]
+    let id=req.params.id
+    
     
 
     let info= await db.Book.findAll({ where: id={id}})

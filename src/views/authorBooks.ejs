@@ -14,22 +14,24 @@
     <div class="container">
       <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
       
-        <div class="feature col">
-          <div class="feature-icon bg-gradient">
-            <img class="d-block mx-auto mb-4" src="<%=data.cover %> " alt="" width="172" height="257">
-          </div>
-          <h2><%=data.title  %> </h2>
-          <p><%=data.description  %> </p>
-          <a href="#" class="icon-link">
-            Detail
-          </a>
-        </div>
-          
+                 
         <% if(data){%> 
-            <% Object.values(data).forEach(() => {%>
-            <h1> <%= value.title %> </h1>    
-            <%}); %>     
-        <% } %>         
+            <% Object.values(data).map((data)=>{%>
+              
+              <div class="feature col">
+                <div class="feature-icon bg-gradient">
+                  <img class="d-block mx-auto mb-4" src="<%=data.cover %> " alt="" width="172" height="257">
+                </div>
+                <h2><%=data.title  %> </h2>
+                <p><%=data.description  %> </p>
+                
+                <a href="/books/detail/<%= data.id %>" class="icon-link">
+                  Detail
+                </a>
+              </div> 
+                   
+            <%})}; %>     
+               
          
   
 
