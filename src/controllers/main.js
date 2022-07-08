@@ -1,9 +1,13 @@
 const bcryptjs = require('bcryptjs');
+const session = require('express-session');
+
 const db = require('../database/models');
 const Author = require('../database/models/Author');
 
 const mainController = {
   home: async (req, res) => {
+    
+   
     db.Book.findAll({
       include: [{ association: 'authors' }]
     })
@@ -13,14 +17,16 @@ const mainController = {
       .catch((error) => console.log(error));
   },
   bookDetail: async (req, res) => {
+    let category=req.cookies.user
+    
     let id=req.params.id
-    console.log(id);
+    
     //esto esta mal
     let datos=await db.Book.findAll({ where: id={id},include: [{ association: 'authors' }] })
       ;
       
       
-      res.render("bookDetail",{data:datos})
+      res.render("bookDetail",{data:datos,category})
     
    
   },
@@ -45,6 +51,7 @@ const mainController = {
     
   },
   authors: (req, res) => {
+    
     db.Author.findAll()
       .then((authors) => {
         res.render('authors', { authors });
@@ -81,26 +88,42 @@ const mainController = {
     // Implement login process
     res.render('login');
   },
+  logout:(req,res)=>{
+
+    req.session.destroy();
+    res.clearCookie("user")
+    res.redirect("/")
+
+  },
   
   processLogin: async (req, res) => {
     let {email,password}=req.body;
-   //Compara el usuaruio exista en la base de datos y si no existe redirige a register
-    let ComprobandoUsuarios= await db.User.findOne(({ where: { Email:email} }))
-    if (ComprobandoUsuarios===null) {
-      res.render("register")
     
+    //Compara el usuaruio exista en la base de datos y si no existe redirige a register
+    let ComprobandoUsuarios= await db.User.findOne(({ where: { Email:email} }))
+    
+    
+    if (ComprobandoUsuarios===null) {
+      
+      res.render("register")
+      
     
     }else{
+      let category=ComprobandoUsuarios.CategoryId
       //comprueba la contraseña con la registrada si es corrta renderiza y envia books a home
       let comprobandoPass= await bcryptjs.compare(password, ComprobandoUsuarios.Pass)
        if(comprobandoPass===true){
-        
+          //definiendo el roll del usuario
+          res.cookie("user", category,"logueado");
+         
         let books= await db.Book.findAll({
           include: [{ association: 'authors' }]
         })
         
-        res.render("home",{books})
+        
+        res.redirect("/")
        }else{
+        
         res.render("register")
        }
     }
