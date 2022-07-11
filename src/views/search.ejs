@@ -26,8 +26,9 @@
      
 
       <% {books.map((book)=>{ %> 
-        <img src="<%= book.dataValues.cover %>" class="¨Libros" alt="">
-        <h1 class="mb-0"><%= book.dataValues.title %> </h1>
+        <h2 class="mb-0 "><%= book.dataValues.title %> </h2>
+        <img class="float-left mb-5 mt-3" alt="" width="172" height="257" src="<%= book.dataValues.cover %>" class="¨Libros" alt="">
+        
         <% })} %>  
     <div class="list-group">
      

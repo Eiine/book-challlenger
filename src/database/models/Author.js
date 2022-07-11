@@ -5,6 +5,7 @@ module.exports = (sequelize, dataTypes) => {
       type: dataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
+      
     },
     name: {
       type: dataTypes.STRING
@@ -15,7 +16,8 @@ module.exports = (sequelize, dataTypes) => {
   };
   let config = {
     tableName: 'Authors',
-    timestamps: false
+    timestamps: false,
+    
   };
 
   const Author = sequelize.define(alias, cols, config);
@@ -26,7 +28,8 @@ module.exports = (sequelize, dataTypes) => {
       through: 'BooksAuthors',
       foreingKey: 'AuthorId',
       otherKey: 'BookId',
-      timestamps: false
+      timestamps: false,
+      
     });
   };
 

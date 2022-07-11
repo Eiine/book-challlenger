@@ -21,9 +21,8 @@ const mainController = {
     
     let id=req.params.id
     
-    //esto esta mal
-    let datos=await db.Book.findAll({ where: id={id},include: [{ association: 'authors' }] })
-      ;
+    
+    let datos=await db.Book.findAll({ where: id={id},include: [{ association: 'authors' }] });
       
       
       res.render("bookDetail",{data:datos,category})
@@ -34,7 +33,7 @@ const mainController = {
     res.render('search', { books: [] });
   },
   bookSearchResult: async (req, res) => {
-    // Implement search by title
+    
     
     let title=req.body.title.toLowerCase()
     let libros= await db.Book.findAll()
@@ -45,10 +44,17 @@ const mainController = {
 
 
   },
-  deleteBook:(req, res) => {
-    console.log(req.params)
-    db.Book.destroy({where:{id:req.params.id} })
+  deleteBook:async (req, res) => {
     
+    //debera aplñicarse las siguientes sentencias en la base de datos para
+    //que este endpoint funcione de manera correcta
+    //use library;
+    //alter table booksauthors drop foreign key booksauthors_ibfk_2 ;
+    //select * from booksauthors;
+    
+   
+   const borrar= await db.Book.destroy({where:{id:req.params.id}});
+    res.redirect("/")
   },
   authors: (req, res) => {
     
@@ -165,9 +171,9 @@ const mainController = {
 
     )
   
-    
-   let books= await db.Book.findAll({
-    include: [{ association: 'authors' }]
+    let books= await db.Book.findAll({
+      include: [{ association: 'authors' }]
+   
     
   })
   
